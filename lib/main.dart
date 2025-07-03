@@ -26,7 +26,7 @@ Widget build(BuildContext context) {
   AppLayout.init(context); // 🔑 Initialize with current context
   return MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: PopularFoodDetails(),
+    home: Mainfoodpage(),
   );
 }
 

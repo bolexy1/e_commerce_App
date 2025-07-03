@@ -74,7 +74,7 @@ class PopularFoodDetails extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         height: AppLayout.getHeight(120),
-        padding: EdgeInsets.only(top: AppLayout.getHeight(30), bottom: AppLayout.getHeight(30),left: AppLayout.getWidth(20),right: AppLayout.getWidth(20)),
+        padding: EdgeInsets.only(top: AppLayout.getHeight(25), bottom: AppLayout.getHeight(25),left: AppLayout.getWidth(20),right: AppLayout.getWidth(20)),
         decoration: BoxDecoration(
           color: AppColors.buttonBackgroundColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(AppLayout.getHeight(40)),topRight: Radius.circular(AppLayout.getHeight(40)),)

@@ -99,18 +99,17 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 itemBuilder: (context, index){
                   return Container(
                     margin: EdgeInsets.only(left: AppLayout.getWidth(20),right:AppLayout.getWidth(20), bottom: AppLayout.getHeight(10)),
-                    child: Row(
-                      
+                    child: Row(                      
                       children: [
                         Container(
                           width: AppLayout.getWidth(120),
                           height: AppLayout.getHeight(120),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(AppLayout.getHeight(20)),
-                            color: Colors.blue,
-                            // image: DecorationImage(
-                            //   fit: BoxFit.cover,
-                            //   image: AssetImage("assets/images/restaurant_bk.png"))
+                            // color: Colors.blue,
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage("assets/images/food0.png"))
                           ),
                         ),
                         Expanded(
@@ -200,7 +199,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             image: DecorationImage(
               fit: BoxFit.cover,
               image:        
-            AssetImage("assets/images/Checkmark.png"))
+            AssetImage("assets/images/food0.png"))
           ),
         ),
         Align(

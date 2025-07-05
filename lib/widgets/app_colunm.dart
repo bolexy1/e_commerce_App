@@ -7,14 +7,15 @@ import 'package:flutter/material.dart';
 
 class AppColunm extends StatelessWidget {
   final String text;
-  const AppColunm({super.key, required this.text});
+  Color? color;
+   AppColunm({super.key, required this.text, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BigText(text: text, size: AppLayout.getHeight(26),),
+                  BigText(text: text, size: AppLayout.getHeight(26), color: color,),
                   SizedBox(height: AppLayout.getHeight(10),),
                   Row(
                     children: [

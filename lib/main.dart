@@ -1,5 +1,7 @@
+import 'package:e_commerce_app/Pages/Home/classWork.dart';
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
 import 'package:e_commerce_app/Pages/food/Popular_food_details.dart';
+import 'package:e_commerce_app/Pages/food/recommended_food_detail.dart';
 import 'package:e_commerce_app/utility/dimentions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,7 @@ Widget build(BuildContext context) {
   AppLayout.init(context); // 🔑 Initialize with current context
   return MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: Mainfoodpage(),
+    home: RecommendedFoodDetail()
   );
 }
 

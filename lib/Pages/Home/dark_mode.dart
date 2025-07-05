@@ -7,14 +7,14 @@ import 'package:e_commerce_app/widgets/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 
-class FoodPageBody extends StatefulWidget {
-  const FoodPageBody({super.key});
+class DarkMode extends StatefulWidget {
+  const DarkMode ({super.key});
 
   @override
-  State<FoodPageBody> createState() => _FoodPageBodyState();
+  State<DarkMode> createState() => _DarkModeState();
 }
 
-class _FoodPageBodyState extends State<FoodPageBody> {
+class _DarkModeState extends State<DarkMode> {
   PageController pageController =PageController(viewportFraction: 0.85);
   var _currPageValue =0.0;
   double _scaleFactor=0.8;
@@ -72,7 +72,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            BigText(text: "Popular",),
+            BigText(text: "Popular",color: Colors.white,),
             SizedBox(width: AppLayout.getWidth(10),),
             Container(
               margin: const EdgeInsetsDirectional.only(bottom: 3),
@@ -91,7 +91,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           ],
         )),
 
-        SizedBox(height: AppLayout.getHeight(20),),
+        SizedBox(height: AppLayout.getHeight(10),),
                 ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                  shrinkWrap: true,
@@ -114,14 +114,13 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         ),
                         Expanded(
                           child: Container(
-                            height: AppLayout.getHeight(100),
-                            width: AppLayout.getWidth(311),
+                           
                                                  
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(topRight: Radius.circular(AppLayout.getHeight(20)),
                               bottomRight: Radius.circular(AppLayout.getHeight(20))
                               ),
-                              color: Colors.white
+                              color: Colors.black38
                             ),
                             child: Padding(
                               padding: EdgeInsets.only(left: AppLayout.getWidth(10), right:AppLayout.getWidth(10) ),
@@ -129,7 +128,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                BigText(text: "Nutritious fruit meal in China"),
+                                BigText(text: "Nutritious fruit meal in China", color: Colors.white,),
                                 SizedBox(height: AppLayout.getHeight(10),),
                                 Smalltext(text: "With chinese Characteristics"),
                                  SizedBox(height: AppLayout.getHeight(10),),
@@ -137,9 +136,9 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         IconAndText(icon: Icons.circle_sharp, text: "Normal",  iconColor: AppColors.inconColor1,), 
-                                        
+                                        SizedBox(width: 0,),
                                         IconAndText(icon: Icons.location_on, text: "1,7km",  iconColor: AppColors.mainColor),
-                                        
+                                        SizedBox(width: 0,),
                                         IconAndText(icon: Icons.access_time_rounded, text: "32mins",  iconColor: AppColors.iconColor2),                   
 
                                       ],),
@@ -209,20 +208,23 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             margin: EdgeInsets.only(left: AppLayout.getWidth(30), right: AppLayout.getWidth(30), bottom: AppLayout.getHeight(30)),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppLayout.getHeight(20)),
-               color: Colors.white,              
+              // color: Colors.white,
+              color: Colors.black38,
               boxShadow: [
                 BoxShadow(
-                   color: Color(0xFFe8e8e8),
+                  // color: Color(0xFFe8e8e8),
                    blurRadius: 5.0,
                   offset: Offset(0, 5)
                 ),
                 BoxShadow(
-                   color: Colors.white,                  
+                  // color: Colors.white,
+                  color: Colors.black38,
                   offset: Offset(-5, 0)
 
                 ),
                 BoxShadow(
-                 color: Colors.white,                  
+                  // color: Colors.white,
+                  color: Colors.black38,
                   offset: Offset(5, 0)
 
                 )
@@ -231,7 +233,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             ),
             child: Container(
               padding: EdgeInsets.only(top: AppLayout.getHeight(15),left: 15,right: 15),
-              child: AppColunm(text: "Chinese Side", ),
+              child: AppColunm(text: "Chinese Side", color: Colors.white,),
             ),
           
           ),

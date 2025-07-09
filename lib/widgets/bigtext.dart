@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/utility/dimentions.dart';
+import 'package:e_commerce_app/utility/AppLayout.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

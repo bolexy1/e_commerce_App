@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/Pages/Home/classWork.dart';
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/Pages/cart/Cart_page.dart';
 import 'package:e_commerce_app/Pages/food/Popular_food_details.dart';
 import 'package:e_commerce_app/Pages/food/recommended_food_detail.dart';
 import 'package:e_commerce_app/controllers/Recommended_products_controller.dart';

@@ -1,4 +1,5 @@
 // ignore: depend_on_referenced_packages
+import 'package:e_commerce_app/Models/CartModel.dart';
 import 'package:e_commerce_app/Models/PopularProducts_model.dart';
 import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/data/Api/api_client.dart';
@@ -45,6 +46,7 @@ class PopularProductController extends GetxController{
   void setQuantity(bool isIncrement){
     if(isIncrement){
       _quantity =checkQuantity(_quantity+1);
+      // print("number of items "+_quantity.toString());
 
     }else{
       _quantity =checkQuantity(_quantity-1);;
@@ -53,12 +55,16 @@ class PopularProductController extends GetxController{
     update();
   }
  int checkQuantity(int quantity){
-    if(quantity<0){
+    if((_inCartItems+quantity)<0){
       Get.snackbar('item count', " you can't reduce more !",
       backgroundColor: AppColors.mainColor,
       colorText: Colors.white );
+      if(_inCartItems>0){
+        _quantity= -_inCartItems;
+        return _quantity; 
+      }
       return 0;
-    }else if(quantity>20){
+    }else if((_inCartItems+quantity)>20){
        Get.snackbar('item count', " you can't Add more !",
       backgroundColor: AppColors.mainColor,
       colorText: Colors.white );
@@ -83,17 +89,24 @@ void initProduct(ProductModel product, CartController cart){
 }
 
 void addItem(ProductModel product, ){
-  if(_quantity>0){
+  // if(_quantity>0){
   _cart.addItem(product, _quantity);
   _quantity=0;
+  _inCartItems=_cart.getQuantity(product);
+
   _cart.items.forEach((key, value){
     print("The id is "+value.id.toString()+" The qunatity is "+value.quantity.toString());
   });
-}else{
-  Get.snackbar('item count', " you Should  add at least one item in the cart!",
-      backgroundColor: AppColors.mainColor,
-      colorText: Colors.white );
 
+  update();
+}
+
+int get totalItems{
+  return _cart.totalItems;
+}
+
+List<CartModel> get getItems{
+  return _cart.getItems;
 }
 }
-}
+// }

@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/Pages/cart/Cart_page.dart';
 import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/popular_product_controller.dart';
 import 'package:e_commerce_app/utility/app_constants.dart';
@@ -57,7 +58,32 @@ class PopularFoodDetails extends StatelessWidget {
                       Get.to(()=>Mainfoodpage());
                     },
                     child: AppIcon(icon: Icons.arrow_back_ios)),
-                  AppIcon(icon: Icons.shopping_cart_outlined),
+                 
+                  GetBuilder<PopularProductController>(builder: (controller){
+                    return Stack(
+                      children: [
+                        AppIcon(icon: Icons.shopping_cart_outlined),
+                        Get.find<PopularProductController>().totalItems>=1?
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(()=>CartPage());
+                            },
+                            child: AppIcon(icon: Icons.circle, size: 20, iconColor: Colors.transparent, backgroundcolor: AppColors.mainColor,))):
+                        Container(),
+                        Get.find<PopularProductController>().totalItems>=1?
+                        Positioned(
+                          right: 7,
+                          top: 1,
+                          child: BigText(text: Get.find<PopularProductController>().totalItems.toString(), size:12, color: Colors.white,)):
+                        Container()
+
+
+                      ],
+                    );
+                  })
                 ],
               )),
             //Introduction to food 
@@ -101,9 +127,8 @@ class PopularFoodDetails extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              //  height: 70,
-              //  width: 110,
+            Container(            
+               
                padding: EdgeInsets.only(top:AppLayout.getHeight(20), bottom: AppLayout.getHeight(20), left: AppLayout.getWidth(20),right: AppLayout.getWidth(20) ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppLayout.getHeight(10)),
@@ -117,9 +142,9 @@ class PopularFoodDetails extends StatelessWidget {
                       popularProduct.setQuantity(false);
                     },
                     child: Icon(Icons.remove, color: AppColors.signcolor,)),
-                  SizedBox(width: AppLayout.getWidth(20),),
+                  SizedBox(width: AppLayout.getWidth(10),),
                   BigText(text: popularProduct.inCartItems.toString()),
-                  SizedBox(width: AppLayout.getWidth(20),),
+                  SizedBox(width: AppLayout.getWidth(10),),
                   GestureDetector(
                     onTap: () {                      
                       popularProduct.setQuantity(true);
@@ -129,19 +154,21 @@ class PopularFoodDetails extends StatelessWidget {
               ),
             ),
 
-            Container(
-              // height: AppLayout.getHeight(70),
-              // width: AppLayout.getWidth(150),
-              padding: EdgeInsets.only(top:AppLayout.getHeight(20), bottom: AppLayout.getHeight(20), left: AppLayout.getWidth(20),right: AppLayout.getWidth(20) ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppLayout.getHeight(15)),
-                color: AppColors.mainColor,
+            GestureDetector(
+              onTap: () {
+                popularProduct.addItem(product);
+              },
+              child: Container(
+                // height: AppLayout.getHeight(70),
+                // width: AppLayout.getWidth(150),
+                padding: EdgeInsets.only(top:AppLayout.getHeight(20), bottom: AppLayout.getHeight(20), left: AppLayout.getWidth(20),right: AppLayout.getWidth(20) ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppLayout.getHeight(15)),
+                  color: AppColors.mainColor,
+                ),
+                child: Center(
+                  child: BigText(text: "\$ ${product.price!} | Add to cart",size: AppLayout.getHeight(18), color: Colors.white,)),
               ),
-              child: Center(child: GestureDetector(
-                onTap: () {
-                  popularProduct.addItem(product);
-                },
-                child: BigText(text: "\$ ${product.price!} | Add to cart",size: AppLayout.getHeight(18), color: Colors.white,))),
             )
           ],
         ),

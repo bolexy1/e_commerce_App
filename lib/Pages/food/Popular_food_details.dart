@@ -1,4 +1,7 @@
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/controllers/cart_controller.dart';
+import 'package:e_commerce_app/controllers/popular_product_controller.dart';
+import 'package:e_commerce_app/utility/app_constants.dart';
 import 'package:e_commerce_app/utility/colors.dart';
 import 'package:e_commerce_app/utility/AppLayout.dart';
 import 'package:e_commerce_app/widgets/App_icon.dart';
@@ -11,10 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PopularFoodDetails extends StatelessWidget {
-  const PopularFoodDetails({super.key});
+  int pageId;
+   PopularFoodDetails({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var product= Get.find<PopularProductController>().popularProductList[pageId];
+    // print('page is id'+pageId.toString());
+    // print('product name is'+product.name.toString());
+
+    Get.find<PopularProductController>().initProduct(product, Get.find<CartController>());
+
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -29,7 +40,8 @@ class PopularFoodDetails extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AssetImage("assets/images/food0.png"))
+                  image: NetworkImage(
+                    AppConstants.BASE_URL+AppConstants.UPLOAD_URI+product.img!))
               ),
             )),
             //icon widget
@@ -64,12 +76,12 @@ class PopularFoodDetails extends StatelessWidget {
                  child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     AppColunm(text: "Chinese Side",),
+                     AppColunm(text: product.name!),
                      SizedBox(height: AppLayout.getHeight(20),),
                      BigText(text: "Introduce"),
                      //expandable text widget
                      SizedBox(height:AppLayout.getHeight(20)),
-                     Expanded(child: SingleChildScrollView(child: ExpandableText(text: "Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced riceChicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice")))
+                     Expanded(child: SingleChildScrollView(child: ExpandableText(text: product.description! )))
                    ],
                  ),
 
@@ -78,7 +90,8 @@ class PopularFoodDetails extends StatelessWidget {
               ),
         ],
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: GetBuilder<PopularProductController>(builder: (popularProduct){
+        return Container(
         height: AppLayout.getHeight(120),
         padding: EdgeInsets.only(top: AppLayout.getHeight(25), bottom: AppLayout.getHeight(25),left: AppLayout.getWidth(20),right: AppLayout.getWidth(20)),
         decoration: BoxDecoration(
@@ -99,11 +112,19 @@ class PopularFoodDetails extends StatelessWidget {
               child: Row(
                 //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Icon(Icons.remove, color: AppColors.signcolor,),
+                  GestureDetector(
+                    onTap: () {
+                      popularProduct.setQuantity(false);
+                    },
+                    child: Icon(Icons.remove, color: AppColors.signcolor,)),
                   SizedBox(width: AppLayout.getWidth(20),),
-                  BigText(text: "0"),
+                  BigText(text: popularProduct.inCartItems.toString()),
                   SizedBox(width: AppLayout.getWidth(20),),
-                  Icon(Icons.add, color: AppColors.signcolor,)
+                  GestureDetector(
+                    onTap: () {                      
+                      popularProduct.setQuantity(true);
+                    },
+                    child: Icon(Icons.add, color: AppColors.signcolor,))
                 ],
               ),
             ),
@@ -116,11 +137,18 @@ class PopularFoodDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(AppLayout.getHeight(15)),
                 color: AppColors.mainColor,
               ),
-              child: Center(child: BigText(text: "\$10 | Add to cart",size: AppLayout.getHeight(18), color: Colors.white,)),
+              child: Center(child: GestureDetector(
+                onTap: () {
+                  popularProduct.addItem(product);
+                },
+                child: BigText(text: "\$ ${product.price!} | Add to cart",size: AppLayout.getHeight(18), color: Colors.white,))),
             )
           ],
         ),
-      ),
+      );
+        
+      }, 
+),
     );
   }
 }

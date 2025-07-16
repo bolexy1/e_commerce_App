@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/controllers/Recommended_products_controller.dart';
 import 'package:e_commerce_app/routes/route_helper.dart';
+import 'package:e_commerce_app/utility/app_constants.dart';
 import 'package:e_commerce_app/utility/colors.dart';
 import 'package:e_commerce_app/utility/AppLayout.dart';
 import 'package:e_commerce_app/widgets/App_icon.dart';
@@ -8,10 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({super.key});
+ final int pageId;
+   RecommendedFoodDetail({super.key, required this.pageId});
 
   @override
   Widget build(BuildContext context) {
+    var product = Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -36,7 +40,7 @@ class RecommendedFoodDetail extends StatelessWidget {
               
               
               padding: EdgeInsets.only(top: 5,bottom: 5),
-              child: Center(child: BigText(text: "Chinese side", size: AppLayout.getHeight(26),)),
+              child: Center(child: BigText(text: product.name!, size: AppLayout.getHeight(26),)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(AppLayout.getHeight(20)),topRight: Radius.circular(AppLayout.getHeight(20))),
                 color: Colors.white,
@@ -47,7 +51,7 @@ class RecommendedFoodDetail extends StatelessWidget {
             backgroundColor: AppColors.yellowColor,
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset("assets/images/food0.png",
+              background: Image.network(AppConstants.BASE_URL+AppConstants.UPLOAD_URI+product.img!,
               width: double.maxFinite,
               fit: BoxFit.cover,
               ),
@@ -58,7 +62,7 @@ class RecommendedFoodDetail extends StatelessWidget {
               children: [
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(20)),
-                  child:ExpandableText(text: "Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced riceChicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced riceChicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced riceChicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced riceChicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced riceChicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice,Chicken marinated in a hot sauce, then fried with Airfryer making it crusty fresh coriander cilantro, then per boiled lightly spiced rice"),
+                  child:ExpandableText(text: product.description!),
                 )
               ],
             ) ,
@@ -74,7 +78,7 @@ class RecommendedFoodDetail extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppIcon(icon: Icons.remove, backgroundcolor: AppColors.mainColor, iconColor: Colors.white, iconSize: AppLayout.getHeight(24),),
-                BigText(text: "\$12.88 "+ " X " + " 0", color: AppColors.mainBlackColor,size: AppLayout.getHeight(26),),
+                BigText(text: "\$${product.price!}  X  0", color: AppColors.mainBlackColor,size: AppLayout.getHeight(26),),
                 AppIcon(icon: Icons.add, backgroundcolor: AppColors.mainColor, iconColor: Colors.white,iconSize: AppLayout.getHeight(24))
               ],
             ),

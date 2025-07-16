@@ -1,6 +1,8 @@
+import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/popular_product_controller.dart';
 import 'package:e_commerce_app/controllers/Recommended_products_controller.dart';
 import 'package:e_commerce_app/data/Api/api_client.dart';
+import 'package:e_commerce_app/data/Repository/cart_repo.dart';
 import 'package:e_commerce_app/data/Repository/popular_product_repo.dart';
 import 'package:e_commerce_app/data/Repository/recommended_product_repo.dart';
 import 'package:e_commerce_app/utility/app_constants.dart';
@@ -11,11 +13,13 @@ Future<void> init()async{
 
 
 // Repos
-  Get.lazyPut(()=> PopularProductRepo(apiClient: Get.find()));
+  Get.lazyPut(()=> PopularProductRepo(apiClient: Get.find()), fenix: true);
   Get.lazyPut(()=> RecommendedProductRepo(apiClient: Get.find()));
+  Get.lazyPut(()=>CartRepo());
 
     Get.lazyPut(()=> PopularProductController(popularProductRepo: Get.find()));
     Get.lazyPut(()=> RecommendedProductController(recommendedProductRepo: Get.find()));
+    Get.lazyPut(()=> CartController(cartRepo: Get.find()));
 
 
 }

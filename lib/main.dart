@@ -3,7 +3,9 @@ import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
 import 'package:e_commerce_app/Pages/cart/Cart_page.dart';
 import 'package:e_commerce_app/Pages/food/Popular_food_details.dart';
 import 'package:e_commerce_app/Pages/food/recommended_food_detail.dart';
+import 'package:e_commerce_app/Pages/splash/splash_page.dart';
 import 'package:e_commerce_app/controllers/Recommended_products_controller.dart';
+import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/popular_product_controller.dart';
 import 'package:e_commerce_app/routes/route_helper.dart';
 import 'package:e_commerce_app/utility/AppLayout.dart';
@@ -32,16 +34,21 @@ class MyApp extends StatelessWidget {
       // ),
       @override
 Widget build(BuildContext context) {
-  Get.find<PopularProductController>().getPopularProductList();
-   Get.find<RecommendedProductController>().getRecommendedProductList();
+Get.find<CartController>().getCartData();
   AppLayout.init(context); // 🔑 Initialize with current context
-  return GetMaterialApp(
+ return GetBuilder<PopularProductController>(builder: (_){
+    return GetBuilder<RecommendedProductController>(builder: (_){
+      return GetMaterialApp(
     debugShowCheckedModeBanner: false,
 
-    home: Mainfoodpage(),
-     initialRoute: RouteHelper.initial,
+    // home: SplashScreen(),
+    initialRoute: RouteHelper.getSplashPage(),
     getPages: RouteHelper.routes,
   );
+
+    });
+
+  });
 }
 
    

@@ -43,6 +43,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   @override
   void dispose(){
     pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -121,7 +122,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.toNamed(RouteHelper.getRecommendedFood(index));
+                            Get.toNamed(RouteHelper.getRecommendedFood(index, "home"));
                           },
                           child: Container(
                             width: AppLayout.getWidth(120),
@@ -131,7 +132,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                               //  color: Colors.blue,
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(AppConstants.BASE_URL+AppConstants.UPLOAD_URI+recommendedProduct.recommendedProductList[index].img!))
+                                image: NetworkImage(recommendedProduct.recommendedProductList[index].img!))
                             ),
                           ),
                         ),
@@ -220,7 +221,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           GestureDetector(
             onTap: () {
 
-              Get.toNamed(RouteHelper.getPopularFood(index));
+              Get.toNamed(RouteHelper.getPopularFood(index, "home"));
             },
             child: Container(
             height: AppLayout.getHeight(220),
@@ -232,7 +233,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 fit: BoxFit.cover,
                 image:        
               NetworkImage(
-                AppConstants.BASE_URL+AppConstants.UPLOAD_URI+popularProduct.img!))
+                popularProduct.img!))
             ),
                     ),
           ),

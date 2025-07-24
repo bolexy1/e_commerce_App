@@ -7,7 +7,14 @@ import 'package:e_commerce_app/data/Repository/popular_product_repo.dart';
 import 'package:e_commerce_app/data/Repository/recommended_product_repo.dart';
 import 'package:e_commerce_app/utility/app_constants.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+
 Future<void> init()async{
+  final sharedPreferences =await SharedPreferences.getInstance();
+
+  Get.lazyPut(()=> sharedPreferences);
   // apiclients
   Get.lazyPut(()=>ApiClient(appBaseUrl: AppConstants.BASE_URL));
 
@@ -15,11 +22,13 @@ Future<void> init()async{
 // Repos
   Get.lazyPut(()=> PopularProductRepo(apiClient: Get.find()), fenix: true);
   Get.lazyPut(()=> RecommendedProductRepo(apiClient: Get.find()));
-  Get.lazyPut(()=>CartRepo());
+  Get.lazyPut(()=>CartRepo(sharedPreferences:Get.find()));
 
+
+// controller 
     Get.lazyPut(()=> PopularProductController(popularProductRepo: Get.find()));
     Get.lazyPut(()=> RecommendedProductController(recommendedProductRepo: Get.find()));
-    Get.lazyPut(()=> CartController(cartRepo: Get.find()));
+    Get.lazyPut(()=> CartController(cartRepo: Get.find()), );
 
 
 }

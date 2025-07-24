@@ -39,7 +39,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   get: ^4.1.4
-  dots_indicator: ^2.0.0  
+  dots_indicator: ^2.0.0 
+  shared_preferences: ^2.0.11
+  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:e_commerce_app/Models/CartModel.dart';
 import 'package:e_commerce_app/Models/PopularProducts_model.dart';
 import 'package:e_commerce_app/data/Repository/cart_repo.dart';
@@ -12,6 +14,10 @@ class CartController extends GetxController{
 
   Map<int, CartModel> get items =>_items;
 
+// only for storage and sharedpreferences
+
+  List<CartModel> storageItems=[];
+
   void addItem(ProductModel product, int quantity){
     var totalQuantity =0;
     if(_items.containsKey(product.id!)){
@@ -25,6 +31,7 @@ class CartController extends GetxController{
       quantity:value.quantity!+quantity,
       time:DateTime.now().toString(),
       isExist: true, 
+      product: product,
 
         ) ;
       });
@@ -44,6 +51,7 @@ class CartController extends GetxController{
       quantity:quantity,
       time:DateTime.now().toString(),
       isExist: true, 
+      product: product
 
     );
     
@@ -57,6 +65,8 @@ class CartController extends GetxController{
   
       
     }
+    cartRepo.addToCartList(getItems);
+    update();
     
     }
     bool existInCart(ProductModel product){
@@ -95,5 +105,38 @@ class CartController extends GetxController{
       return _items.entries.map((e) {
         return e.value;
       }).toList();
+    }
+
+    int get totalAmount{
+      var total =0;
+
+      _items.forEach((key, value){
+        total += value.quantity!*value.price!;
+
+      });
+
+      return total;
+    }
+
+    List<CartModel> getCartData(){
+      setCart = cartRepo.getCartList();
+      return storageItems;
+    }
+
+    set setCart(List<CartModel> items){
+      storageItems=items;
+
+      // ignore: prefer_interpolation_to_compose_strings
+      print("length of cart items "+storageItems.length.toString());
+
+
+      for (int i = 0; i < storageItems.length; i++) {
+
+         _items.putIfAbsent(storageItems[i].product!.id!, ()=> storageItems[i]);
+        
+      }
+
+
+     
     }
   }

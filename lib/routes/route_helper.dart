@@ -1,39 +1,63 @@
+import 'package:e_commerce_app/Pages/Home/home_page.dart';
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/Pages/cart/Cart_page.dart';
 import 'package:e_commerce_app/Pages/food/Popular_food_details.dart';
 import 'package:e_commerce_app/Pages/food/recommended_food_detail.dart';
+import 'package:e_commerce_app/Pages/splash/splash_page.dart';
 import 'package:get/get.dart';
 
 class RouteHelper {
+  static const String splashpage="/splash-page";
   static const String initial="/";
   static const String popularFood = "/popular-food";
    static const String recommendedFood = "/recommended-food";
+   static const String cartPage = '/cart-page';
+   
 
-
+  static String getSplashPage()=>'$splashpage';
   static String getInitial()=>'$initial';
 
-  static String getPopularFood(int pageId)=>'$popularFood?pageId=$pageId';
+  static String getPopularFood(int pageId, String page )=>'$popularFood?pageId=$pageId&page=$page';
 
-  static String getRecommendedFood(int pageId)=>'$recommendedFood?pageId=$pageId';
+  static String getRecommendedFood(int pageId, String page)=>'$recommendedFood?pageId=$pageId&page=$page';
+
+  static String getCartPage()=>"$cartPage";
 
 
   static List<GetPage> routes=[
+
+    GetPage(name: splashpage, page: ()=> SplashScreen()),
     GetPage(name: initial, page: (){
       
-      return Mainfoodpage();
+      return HomePage();
       
       }),
     GetPage(name: popularFood, page: (){
       var pageId = Get.parameters['pageId'];
+      var page = Get.parameters['page'];
 
 
-      return PopularFoodDetails(pageId:int.parse(pageId!));
+      return PopularFoodDetails(pageId:int.parse(pageId!), page:page!);
       },
           transition: Transition.fadeIn
       ), 
 
       GetPage(name: recommendedFood, page: (){
         var pageId = Get.parameters['pageId'];
-       return RecommendedFoodDetail(pageId:int.parse(pageId!));
-      })
+        var page = Get.parameters['page'];
+       return RecommendedFoodDetail(pageId:int.parse(pageId!), page:page!);
+      },
+
+      transition: Transition.fadeIn
+      
+      ),
+
+      GetPage(name: cartPage, page: (){
+        return  CartPage();
+      },
+
+      transition: Transition.fadeIn
+      
+      )
   ];
 }

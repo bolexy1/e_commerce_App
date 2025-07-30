@@ -24,10 +24,10 @@ class CartController extends GetxController{
       _items.update(product.id!, (value) {
         totalQuantity=value.quantity!+quantity;
         return CartModel(         
-      id: product.id,
-      name: product.name,      
-      price: product.price,      
-      img: product.img,
+      id: value.id,
+      name: value.name,      
+      price: value.price,      
+      img: value.img,
       quantity:value.quantity!+quantity,
       time:DateTime.now().toString(),
       isExist: true, 
@@ -134,9 +134,30 @@ class CartController extends GetxController{
 
          _items.putIfAbsent(storageItems[i].product!.id!, ()=> storageItems[i]);
         
-      }
+      }     
+    }
 
+    void addToHistory(){
+      cartRepo.addToCartHistoryList();
+      clear();
+    }
 
-     
+    void clear(){
+      _items={};
+      update();
+    }
+
+    List<CartModel> getCartHistoryList(){
+      return cartRepo.getCartHistoryList();
+    }
+
+    set setItems(Map<int, CartModel> setItems){
+      _items = {};
+      _items = setItems;
+    }
+
+    void addToCartList(){
+      cartRepo.addToCartList(getItems);
+      update();
     }
   }

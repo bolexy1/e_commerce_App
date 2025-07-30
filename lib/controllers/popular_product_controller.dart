@@ -81,11 +81,11 @@ void initProduct(ProductModel product, CartController cart){
   var exist=false;
   exist = _cart.existInCart(product);
   // get from storage _inCartItem
-  print("exist or not "+exist.toString());
+  // print("exist or not "+exist.toString());
   if(exist){
     _inCartItems=cart.getQuantity(product);
   }
-  print("the quantity in the cart is "+_inCartItems.toString());
+  // print("the quantity in the cart is "+_inCartItems.toString());
 }
 
 void addItem(ProductModel product, ){
@@ -95,7 +95,7 @@ void addItem(ProductModel product, ){
   _inCartItems=_cart.getQuantity(product);
 
   _cart.items.forEach((key, value){
-    print("The id is "+value.id.toString()+" The qunatity is "+value.quantity.toString());
+    // print("The id is "+value.id.toString()+" The qunatity is "+value.quantity.toString());
   });
 
   update();

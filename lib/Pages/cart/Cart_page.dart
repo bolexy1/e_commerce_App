@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/base/No_data_page.dart';
 import 'package:e_commerce_app/controllers/Recommended_products_controller.dart';
 import 'package:e_commerce_app/controllers/cart_controller.dart';
 import 'package:e_commerce_app/controllers/popular_product_controller.dart';
@@ -54,7 +55,8 @@ class CartPage extends StatelessWidget {
 
             ],
           )),
-          Positioned(
+           GetBuilder<CartController>(builder: (_cartController){
+            return _cartController.getItems.length>0?Positioned(
             top: AppLayout.getHeight(100),
             left: AppLayout.getWidth(20),
             right: AppLayout.getWidth(20),
@@ -86,7 +88,13 @@ class CartPage extends StatelessWidget {
                              }else{
                                var recommendedIndex= Get.find<RecommendedProductController>()
                              .recommendedProductList.indexOf(_cartList[index].product!);
-                             Get.toNamed(RouteHelper.getRecommendedFood(recommendedIndex, "cartpage"));
+                             if(recommendedIndex<0){
+                              Get.snackbar('History', " Product review is not available for history products!",
+                              backgroundColor: AppColors.mainColor,colorText: Colors.white );
+
+                             }else{
+                              Get.toNamed(RouteHelper.getRecommendedFood(recommendedIndex, "cartpage"));
+                             }
                              }
                           },
                           child: Container(
@@ -164,7 +172,8 @@ class CartPage extends StatelessWidget {
                 } );
                 }),
               ),
-            ))
+            )):NoDataPage(text: "YOur cart is empty!");
+           })
         ],
       ),
       bottomNavigationBar: GetBuilder<CartController>(builder: (cartController){
@@ -175,7 +184,7 @@ class CartPage extends StatelessWidget {
           color: AppColors.buttonBackgroundColor,
           borderRadius: BorderRadius.only(topLeft: Radius.circular(AppLayout.getHeight(40)),topRight: Radius.circular(AppLayout.getHeight(40)),)
         ),
-        child: Row(
+        child: cartController.getItems.length>0? Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(            
@@ -200,6 +209,7 @@ class CartPage extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 // popularProduct.addItem(product);
+                cartController.addToHistory();
               },
               child: Container(
                 // height: AppLayout.getHeight(70),
@@ -214,7 +224,7 @@ class CartPage extends StatelessWidget {
               ),
             )
           ],
-        ),
+        ):Container(),
       );
         
       }, 

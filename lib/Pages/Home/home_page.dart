@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/Pages/cart/Cart_history.dart';
 import 'package:e_commerce_app/utility/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   List pages = [
     Mainfoodpage(),
     Container(child: Center(child: Text("Next page")),),
-    Container(child: Center(child: Text("Next 2 pages")),),
+    CartHistory(),
     Container(child: Center(child: Text("Next 3 pages")),),
 
   ];

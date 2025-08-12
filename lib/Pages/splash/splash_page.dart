@@ -43,7 +43,13 @@ class _SplashScreenState extends State<SplashScreen>with TickerProviderStateMixi
         ()=>Get.offNamed(RouteHelper.getInitial()) );
 
   }
-  
+
+  @override
+  void dispose(){  
+    controller.dispose();  
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {

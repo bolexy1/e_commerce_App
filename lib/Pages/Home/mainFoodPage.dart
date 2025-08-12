@@ -1,22 +1,30 @@
 import 'package:e_commerce_app/Pages/Home/food_page_body.dart';
+import 'package:e_commerce_app/controllers/Recommended_products_controller.dart';
+import 'package:e_commerce_app/controllers/popular_product_controller.dart';
 import 'package:e_commerce_app/utility/colors.dart';
 import 'package:e_commerce_app/utility/AppLayout.dart';
 import 'package:e_commerce_app/widgets/smalltext.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app/widgets/bigtext.dart';
+import 'package:get/get.dart';
 
 class Mainfoodpage extends StatefulWidget {
   const Mainfoodpage({super.key});
 
   @override
   State<Mainfoodpage> createState() => _MainfoodpageState();
+   // ignore: unused_element
+   
 }
 
 class _MainfoodpageState extends State<Mainfoodpage> {
+  Future <void> _loadResource() async{
+     await Get.find<PopularProductController>().getPopularProductList();
+     await Get.find<RecommendedProductController>().getRecommendedProductList();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return RefreshIndicator(child: Column(
         children: [
           //showing the header
           Container(
@@ -62,6 +70,6 @@ class _MainfoodpageState extends State<Mainfoodpage> {
           ))
         ],
       ),
-    );
+  onRefresh:_loadResource );
   }
 }

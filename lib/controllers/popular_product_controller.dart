@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 class PopularProductController extends GetxController{
   final PopularProductRepo popularProductRepo;
   // final ApiClient apiClient;
-
   PopularProductController({required this.popularProductRepo});
   List<dynamic> _popularProductList = [];
   List<dynamic> get popularProductList => _popularProductList;

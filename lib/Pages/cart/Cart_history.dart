@@ -20,7 +20,7 @@ class CartHistory extends StatelessWidget {
   Widget build(BuildContext context) {
      var getCartHistoryList = Get.find<CartController>()
      .getCartHistoryList().reversed.toList();
-     Map <String, int> cartItemsPerOrder  = Map(); 
+     Map <String, int> cartItemsPerOrder = Map(); 
   
   for(int i=0; i < getCartHistoryList.length; i++){
     if(cartItemsPerOrder.containsKey(getCartHistoryList[i].time)){
@@ -40,12 +40,25 @@ class CartHistory extends StatelessWidget {
   List<int> itemsPerOrder = cartItemsPerOrderToList();
   
   var listCounter=0;
+  Widget timeWidget(int index){
+    var outputDate =DateTime.now().toString();
+    if(index<getCartHistoryList.length){
+      DateTime parseDate= DateFormat("yyyy-MM-dd HH:mm:ss").parse(getCartHistoryList[listCounter].time!);
+      var inputDate = DateTime.parse(parseDate.toString());
+      var outputFormat = DateFormat("MM/dd/yyy hh:mm a");
+      outputDate = outputFormat.format(inputDate);
+      
+    }
+    return BigText(text: outputDate);
+    
+
+  }
     return Scaffold(
       
       body: Column(
         children: [
           Container(
-            width: double.maxFinite,
+           width: double.maxFinite,
             height: AppLayout.getHeight(100),
             color: AppColors.mainColor,
             padding: EdgeInsets.only(top: AppLayout.getHeight(45)),
@@ -61,13 +74,15 @@ class CartHistory extends StatelessWidget {
             ),
           ),
           GetBuilder<CartController>(builder: (_cartController){
-            return _cartController.getItems.length>0?Expanded(
+            return
+             _cartController.getCartHistoryList().length>0 ?
+            Expanded(
             child: Container(
-              
+              width: double.maxFinite,
               margin: EdgeInsets.only(
                 top: AppLayout.getHeight(20),
                 left: AppLayout.getWidth(20),
-                right: AppLayout.getWidth(20),
+                 right: AppLayout.getWidth(20),
             
               ),
               child:MediaQuery.removePadding(
@@ -81,82 +96,89 @@ class CartHistory extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ((){
-                          DateTime parseDate= DateFormat("yyyy-MM-dd HH:mm:ss").parse(getCartHistoryList[listCounter].time!);
-                          var inputDate = DateTime.parse(parseDate.toString());
-                          var outputFormat = DateFormat("MM/dd/yyy hh:mm a");
-
-                          var outputDate = outputFormat.format(inputDate);
-                          return BigText(text: outputDate);
-
-                        }()),
+                        timeWidget(listCounter),
+            
                         SizedBox(height: AppLayout.getHeight(10),),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Wrap(
-                              direction: Axis.horizontal,
-                              children: List.generate(itemsPerOrder[i], (index){
-                                if(listCounter<getCartHistoryList.length){
-                                  listCounter++;
-                                }
-                                return index<=2?Container(
-                                  height: AppLayout.getHeight(80),
-                                  width: AppLayout.getHeight(80),
-                                  margin: EdgeInsets.only(right: AppLayout.getWidth(5)),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(AppLayout.getHeight(8)),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(getCartHistoryList[listCounter-1].img!))
-                                  ),
-
-                                ):Container();
-                              }),
-                            ),
-                            Container(                              
-                              height: AppLayout.getHeight(80),
-                              child:Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Smalltext(text: "Total", color: AppColors.titleColor,),
-                                  BigText(text: itemsPerOrder[i].toString()+" Items", color: AppColors.titleColor, ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      var orderTime = cartOrderTimeToList();
-                                      Map<int, CartModel> moreOrder ={};
-                                      for(int j=0; j<getCartHistoryList.length; j++){
-                                        if(getCartHistoryList[j].time==orderTime[i]){
-                                          
-                                          // print("The cart or product id is "+getCartHistoryList[j].product!.id.toString());
-                                          moreOrder.putIfAbsent(getCartHistoryList[j].id!, ()=>
-                                            CartModel.fromJson(jsonDecode(jsonEncode(getCartHistoryList[j])))
-                                          );
-                                         
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: 
+                                      List.generate(itemsPerOrder[i], (index){
+                                        if(listCounter<getCartHistoryList.length){
+                                          listCounter++;
                                         }
-
-                                      }
-                                      Get.find<CartController>().setItems = moreOrder;
-                                      Get.find<CartController>().addToCartList();
-                                      Get.toNamed(RouteHelper.getCartPage());
-
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(10), vertical: AppLayout.getHeight(5)),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
-                                        border: Border.all(width: 1,color: AppColors.mainColor),
-                                        
+                                        return 
+                                        // index<=2?
+                                         Container(
+                                              height: AppLayout.getHeight(80),
+                                              width: AppLayout.getHeight(80),
+                                              margin: EdgeInsets.only(right: AppLayout.getWidth(5)),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(AppLayout.getHeight(8)),
+                                                image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(getCartHistoryList[listCounter-1].img!))
+                                              ),
+                                                                      
+                                            
+                                                                               );
+                                         
+                                        //  : Container();
+                                      }),
+                                      
                                       ),
-                                      child: Smalltext(text: "one more", color: AppColors.mainColor,),
                                     ),
-                                  )
-                                ],
-                              ) ,
+                                ),
+                               
+                                Container(                              
+                                  height: AppLayout.getHeight(80),
+                                  child:Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Smalltext(text: "Total", color: AppColors.titleColor,),
+                                      BigText(text: itemsPerOrder[i].toString()+" Items", color: AppColors.titleColor, ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          var orderTime = cartOrderTimeToList();
+                                          Map<int, CartModel> moreOrder ={};
+                                          for(int j=0; j<getCartHistoryList.length; j++){
+                                            if(getCartHistoryList[j].time==orderTime[i]){
+                                              
+                                              // print("The cart or product id is "+getCartHistoryList[j].product!.id.toString());
+                                              moreOrder.putIfAbsent(getCartHistoryList[j].id!, ()=>
+                                                CartModel.fromJson(jsonDecode(jsonEncode(getCartHistoryList[j])))
+                                              );
+                                             
+                                            }
+                            
+                                          }
+                                          Get.find<CartController>().setItems = moreOrder;
+                                          Get.find<CartController>().addToCartList();
+                                          Get.toNamed(RouteHelper.getCartPage());
+                            
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(horizontal: AppLayout.getWidth(10), vertical: AppLayout.getHeight(5)),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(AppLayout.getHeight(5)),
+                                            border: Border.all(width: 1,color: AppColors.mainColor),
+                                            
+                                          ),
+                                          child: Smalltext(text: "one more", color: AppColors.mainColor,),
+                                        ),
+                                      )
+                                    ],
+                                  ) ,
+                                ),
+                              ],
                             ),
-                          ],
-                        )
+                        
+                        
                       ],
                     ),
                   )
@@ -173,7 +195,7 @@ class CartHistory extends StatelessWidget {
             height: MediaQuery.of(context).size.height/1.5,
             child: const Center(
               child: NoDataPage(text: "You haven't bought anything so far !",
-                        imgPath: "assets/images/empty box.png",),
+                        imgPath: "assets/images/empty_box.png",),
             ));
           })
 

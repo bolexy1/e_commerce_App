@@ -172,7 +172,7 @@ class CartPage extends StatelessWidget {
                 } );
                 }),
               ),
-            )):NoDataPage(text: "YOur cart is empty!");
+            )):NoDataPage(text: "Your cart is empty!");
            })
         ],
       ),

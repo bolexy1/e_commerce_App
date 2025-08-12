@@ -1,4 +1,8 @@
+import 'package:e_commerce_app/Pages/Account/accont_page.dart';
+import 'package:e_commerce_app/Pages/Home/FaceBook.dart';
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/Pages/Home/me.dart';
+import 'package:e_commerce_app/Pages/auth/sign_up_page.dart';
 import 'package:e_commerce_app/Pages/cart/Cart_history.dart';
 import 'package:e_commerce_app/utility/colors.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +18,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex =0;
   List pages = [
     Mainfoodpage(),
-    Container(child: Center(child: Text("Next page")),),
+    SignUpPage(),
     CartHistory(),
-    Container(child: Center(child: Text("Next 3 pages")),),
+    AccontPage(),
+    Facebook(),
+
 
   ];
 
@@ -51,6 +57,10 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart,),
             label: "cart" 
+            ),
+            BottomNavigationBarItem(
+            icon: Icon(Icons.person,),
+            label: "Me" 
             ),
             BottomNavigationBarItem(
             icon: Icon(Icons.person,),

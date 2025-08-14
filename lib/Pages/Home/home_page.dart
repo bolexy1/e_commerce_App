@@ -2,6 +2,7 @@ import 'package:e_commerce_app/Pages/Account/accont_page.dart';
 import 'package:e_commerce_app/Pages/Home/FaceBook.dart';
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
 import 'package:e_commerce_app/Pages/Home/me.dart';
+import 'package:e_commerce_app/Pages/auth/sign_in_page.dart';
 import 'package:e_commerce_app/Pages/auth/sign_up_page.dart';
 import 'package:e_commerce_app/Pages/cart/Cart_history.dart';
 import 'package:e_commerce_app/utility/colors.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex =0;
   List pages = [
     Mainfoodpage(),
-    SignUpPage(),
+    Container(child: Text("History page"),),
     CartHistory(),
     AccontPage(),
     Facebook(),

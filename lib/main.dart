@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/Pages/Home/classWork.dart';
 import 'package:e_commerce_app/Pages/Home/mainFoodPage.dart';
+import 'package:e_commerce_app/Pages/auth/sign_in_page.dart';
 import 'package:e_commerce_app/Pages/auth/sign_up_page.dart';
 import 'package:e_commerce_app/Pages/cart/Cart_page.dart';
 import 'package:e_commerce_app/Pages/food/Popular_food_details.dart';
@@ -39,13 +40,13 @@ Get.find<CartController>().getCartData();
   AppLayout.init(context); // 🔑 Initialize with current context
  return GetBuilder<PopularProductController>(builder: (_){
     return GetBuilder<RecommendedProductController>(builder: (_){
-      return const GetMaterialApp(
+      return GetMaterialApp(
     debugShowCheckedModeBanner: false,
 
-    //  home: SplashScreen(),
-    // initialRoute: RouteHelper.getSplashPage(),
-    home: SignUpPage(),
-    // getPages: RouteHelper.routes,
+      // home: SplashScreen(),
+       initialRoute: RouteHelper.getSplashPage(),
+    //  home: SignInPage(),
+     getPages: RouteHelper.routes,
   );
 
     });

@@ -1,3 +1,8 @@
+import 'package:e_commerce_app/Models/signUpBodyModel.dart';
+import 'package:e_commerce_app/base/customLoader.dart';
+import 'package:e_commerce_app/base/show_custom_snackbar.dart';
+import 'package:e_commerce_app/controllers/auth_controller.dart';
+import 'package:e_commerce_app/routes/route_helper.dart';
 import 'package:e_commerce_app/utility/AppLayout.dart';
 import 'package:e_commerce_app/utility/colors.dart';
 import 'package:e_commerce_app/widgets/app_text_field.dart';
@@ -22,9 +27,57 @@ class SignUpPage extends StatelessWidget {
 
 
     ];
+
+    void _registration(AuthController authController) {
+      
+      String name = nameController.text.trim();
+      String phone = phoneController.text.trim();
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
+
+      if(name.isEmpty){
+        showCustomSnackBar("Type in your name", title: "Name");
+
+      }else if(phone.isEmpty){
+        showCustomSnackBar("Type in your Phone number", title: "Phone number");
+
+      }else if(email.isEmpty){
+        showCustomSnackBar("Type in your email", title: "Email address");
+
+      }else if(!GetUtils.isEmail(email)){
+        showCustomSnackBar("Type in a valid email address", title: "Valid email address");
+
+      }else if(password.isEmpty){
+        showCustomSnackBar("Type in your password", title: "password");
+
+      }else if(password.length<6){
+        showCustomSnackBar("Password can not be less than six Characters", title: "Password six");
+
+      }else{
+        showCustomSnackBar("We are in", title: "Perfect");
+        Signupbodymodel signupbody = Signupbodymodel(
+          name: name,
+         phone: phone,
+          email: email,
+           password: password);
+           authController.registration(signupbody).then((status){
+            if(status.isSuccess){
+              print("Success registration");
+              Get.offNamed(RouteHelper.getInitial());
+
+            }else{
+              showCustomSnackBar(status.message); 
+            }
+           });
+
+           
+
+      }
+    }
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
+      body: GetBuilder<AuthController>(builder: (_authController){
+        return !_authController.isLoading?SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
@@ -46,6 +99,7 @@ class SignUpPage extends StatelessWidget {
               SizedBox(height: AppLayout.getHeight(20),),
                           
             AppTextField(
+              isObscure: true,
               hintText: "Password", 
               icon: Icons.password_sharp, 
               textController: passwordController),
@@ -63,17 +117,23 @@ class SignUpPage extends StatelessWidget {
               SizedBox(height: AppLayout.getHeight(20),),
               // Sign up botton
         
-              Container(
-                width: AppLayout.screenWidth/2,
-                height: AppLayout.screenHeight/13,
-                decoration: BoxDecoration(
-                  color: AppColors.mainColor,
-                  borderRadius: BorderRadius.circular(AppLayout.getHeight(30))
-        
-                ),
-                child: Center(
-                  child: BigText(text: "Sing up",
-                  size: AppLayout.getHeight(30),color: Colors.white,),
+              GestureDetector(
+                onTap: () {
+                  _registration(_authController);
+                  
+                },
+                child: Container(
+                  width: AppLayout.screenWidth/2,
+                  height: AppLayout.screenHeight/13,
+                  decoration: BoxDecoration(
+                    color: AppColors.mainColor,
+                    borderRadius: BorderRadius.circular(AppLayout.getHeight(30))
+                        
+                  ),
+                  child: Center(
+                    child: BigText(text: "Sign up",
+                    size: AppLayout.getHeight(30),color: Colors.white,),
+                  ),
                 ),
               ),
               SizedBox(height: AppLayout.getHeight(10),),
@@ -117,7 +177,10 @@ class SignUpPage extends StatelessWidget {
            
           ],
         ),
-      ),
+      ):Customloader();
+      })
     );
+
+    
   }
 }
